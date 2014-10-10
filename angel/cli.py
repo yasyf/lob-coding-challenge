@@ -1,10 +1,11 @@
 from models import *
-import click, json
+import click, json, datetime
 
 @click.command()
 @click.argument('input', envvar='ANGEL_FILE', type=click.File('r'))
 @click.option('--pretty/--no-pretty', default=True, help='Pretty print output.')
 def find_companies(input, pretty):
+  start = datetime.datetime.now()
   click.clear()
   click.echo(click.style('Welcome to angel!', fg='green'))
   click.echo(click.style('I will now search AngelList for this candidates optimal companies.', fg='green'))
@@ -18,7 +19,7 @@ def find_companies(input, pretty):
         if market.name.strip().lower() in candidate.cleaned_interests():
           results.append(company.summarize())
           break
-      if len(results) == 10:
+      if len(results) == 10 or datetime.datetime.now() - start > datetime.timedelta(minutes=1):
         break
     click.echo('\n\n')
     click.echo(click.style('I found {num} results!'.format(num=len(results)), fg='green'))
