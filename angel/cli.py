@@ -3,7 +3,7 @@ import click, json
 
 @click.command()
 @click.argument('input', envvar='ANGEL_FILE', type=click.File('r'))
-@click.option('--pretty/--no-pretty', default=True)
+@click.option('--pretty/--no-pretty', default=True, help='Pretty print output.')
 def find_companies(input, pretty):
   click.clear()
   click.echo(click.style('Welcome to angel!', fg='green'))

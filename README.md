@@ -9,6 +9,6 @@
 Usage: angel.py [OPTIONS] INPUT
 
 Options:
-  --pretty / --no-pretty
+  --pretty / --no-pretty  Pretty print output.
   --help                  Show this message and exit.
 ```
