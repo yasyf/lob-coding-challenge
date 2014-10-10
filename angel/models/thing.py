@@ -7,10 +7,7 @@ class Thing(object):
     self.api = Thing.api()
 
   def __getattr__(self, key):
-    try:
-      value = self.source_dict[key]
-    except:
-      return super(Thing, self).__getattr__(key)
+    value = self.source_dict[key]
     if type(value) is list:
       return [Thing(x) for x in value]
     elif type(value) is dict:
@@ -19,7 +16,7 @@ class Thing(object):
       return value
 
   def __str__(self):
-    return json.dumps(self.source_dict, sort_keys=True, indent=4, separators=(',', ': '))
+    return str(self.source_dict)
 
   def __repr__(self):
     return self.__str__()

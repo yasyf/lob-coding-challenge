@@ -14,8 +14,7 @@ class AngelAPI:
 
   def make_request(self, verb, action, query_params):
     query_params.update({'access_token': self.access_token})
-    json = getattr(requests, verb)('{endpoint}{action}'.format(endpoint=self.endpoint, action=action), params=query_params).json()
-    return models.thing.Thing(json)
+    return getattr(requests, verb)('{endpoint}{action}'.format(endpoint=self.endpoint, action=action), params=query_params).json()
 
   def get(self, action, query_params={}):
     return self.make_request('get', action, query_params)
