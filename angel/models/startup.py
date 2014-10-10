@@ -16,5 +16,14 @@ class Startup(Thing):
     return Thing.api().get('startups', {'filter': 'raising', 'per_page': 1})['last_page']
 
   def summarize(self):
-    properties = ['name']
+    properties = ['name', 'quality', 'high_concept', 'company_url', 'angellist_url', 'cities']
     return {k:getattr(self, k) for k in properties}
+
+  @property
+  def cleaned_locations(self):
+    return [x.name.strip().lower() for x in self.locations]
+
+  @property
+  def cities(self):
+    return [x.name.title() for x in self.locations]
+  

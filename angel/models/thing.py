@@ -8,9 +8,9 @@ class Thing(object):
 
   def __getattr__(self, key):
     value = self.source_dict[key]
-    if type(value) is list:
+    if isinstance(value, list) and all([isinstance(x, list) or isinstance(x, dict) for x in value]):
       return [Thing(x) for x in value]
-    elif type(value) is dict:
+    elif isinstance(value, dict):
       return Thing(value)
     else:
       return value

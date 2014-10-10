@@ -1,5 +1,7 @@
 {
   "name": "Yasyf Mohamedali",
-  "location": "Boston, MA",
-  "interests": ["social media"]
+  "locations": ["San Francisco", "Palo Alto"],
+  "interests": ["SaaS"],
+  "would_relocate": false,
+  "full_time_only": true
 }
