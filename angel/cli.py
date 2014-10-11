@@ -1,5 +1,10 @@
 from models import *
-import click, json, datetime
+import json, datetime
+
+try:
+  import click
+except:
+  raise Exception("Run `pip install -r requirements.txt` to continue.")
 
 @click.command()
 @click.argument('input', envvar='ANGEL_FILE', type=click.File('r'))
