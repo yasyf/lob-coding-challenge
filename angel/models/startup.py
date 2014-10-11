@@ -17,7 +17,12 @@ class Startup(Thing):
 
   def summarize(self):
     properties = ['name', 'quality', 'high_concept', 'company_url', 'angellist_url', 'cities']
-    return {k:getattr(self, k) for k in properties}
+    summary = {k:getattr(self, k) for k in properties}
+    summary['jobs'] = []
+    for job in self.jobs():
+      location = [x for x in job.tags if x.tag_type == 'LocationTag'][0]
+      summary['jobs'].append({'location': location.display_name, 'title': job.title, 'salary': job.salary_max})
+    return summary
 
   @property
   def cleaned_locations(self):
@@ -25,5 +30,12 @@ class Startup(Thing):
 
   @property
   def cities(self):
-    return [x.name.title() for x in self.locations]
+    return [x.display_name for x in self.locations]
+
+  def jobs(self):
+    try:
+      return self._jobs
+    except:
+      self._jobs = [Thing(x) for x in self.api.get('startups/{id}/jobs'.format(id=self.id))]
+      return self._jobs
   

@@ -1,7 +1,8 @@
 {
   "name": "Yasyf Mohamedali",
   "locations": ["San Francisco", "Palo Alto"],
-  "interests": ["SaaS"],
-  "would_relocate": false,
-  "full_time_only": true
+  "interests": ["e-commerce"],
+  "would_relocate": true,
+  "must_have_opening": true,
+  "full_time_only": false
 }

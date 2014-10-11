@@ -7,7 +7,7 @@ import click, json, datetime
 def find_companies(input, pretty):
   start = datetime.datetime.now()
   candidate = person.Person(json.load(input))
-  progressbar_length = startup.Startup.num_pages()/(len(candidate.interests))
+  progressbar_length = startup.Startup.num_pages()/(len(candidate.interests) or 1)
   
   if pretty:
     click.clear()
@@ -28,11 +28,16 @@ def get_results(all_startups, candidate, start):
   results = []
   for company in all_startups:
       for market in company.markets:
-        if market.name.strip().lower() in candidate.cleaned_interests:
+        if (not candidate.cleaned_interests) or market.name.strip().lower() in candidate.cleaned_interests:
           if not candidate.would_relocate and not any([x in candidate.cleaned_locations for x in company.cleaned_locations]):
             continue
+          if candidate.must_have_opening:
+            if not company.jobs():
+              continue
+            if candidate.full_time_only and not any([x.job_type == 'full-time' for x in company.jobs()]):
+              continue
           results.append(company.summarize())
           break
-      if len(results) == 1 or datetime.datetime.now() - start > datetime.timedelta(minutes=5):
+      if len(results) == 10 or datetime.datetime.now() - start > datetime.timedelta(minutes=5):
         break
   return results
